@@ -9,86 +9,192 @@ for (var i = 0; i < btns.length; i++) {
   });
 }
 
-/* Inicializa  Modal registar  */
-const regist = document.getElementById("registar");
-regist.addEventListener("click", regForm);
+/* Logica de login - logout */
+showLoginElement('block', 'none');
 
-/* Inicializa  Modal login  */
-const entra = document.getElementById("entrar");
-entra.addEventListener("click", loginForm);
+function showLoginElement(showLogin, showLogout) {
+  document.getElementById('showLogin').style.display = showLogin;
+  document.getElementById('showLogout').style.display = showLogout;
+}
+
+function hasLogin(email, password) {
+  for (let i = 0; i < registerUsers.length; i++) {
+    if (registerUsers[i].email === email) {
+      if (registerUsers[i].password === password) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function existLogin(email) {
+  for (let i = 0; i < registerUsers.length; i++) {
+    if (registerUsers[i].email === email) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+function isAdmin(email) {
+  for (let i = 0; i < registerUsers.length; i++) {
+    if (registerUsers[i].email === email) {
+      if (registerUsers[i].type === 'admin') {
+        return true;
+      }
+    }
+  }
+  return false
+}
 
 /*  Desenha a model Registar  */
 function regForm() {
-  swal(
-    {
-      title: "Registo de novo utrilizador",
+  (async () => {
+    const { value: formLogin } = await Swal.fire(
+      {
+        title: "Registo de novo utrilizador",
 
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Registar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: true,
+        html:
+          '<form id="regForm">' +
+          '<span class="navbar-brand" href="#">' +
+          '<img src="./images/logo.png" width="30" height="30" alt="logo" />' +
+          "Filmes BD" +
+          "</span><br><br>" +
+          '<div class="form-group">' +
+          '<input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="Primeiro Nome">' +
+          "</div>" +
+          '<div class="form-group"> ' +
+          ' <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Ultimo Nome">' +
+          "</div>" +
+          '<div class="form-group">' +
+          '<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Correio Eletrónico">' +
+          "</div>" +
+          '<div class="form-group"> ' +
+          '<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Senha"> ' +
+          "</div>" +
+          '<div class="form-group">' +
+          '<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirme a Senha">' +
+          "</div>" +
+          "</form>",
+
+        preConfirm: () => {
+          return [
+            document.getElementById("first_name").value,
+            document.getElementById("last_name").value,
+            document.getElementById("email").value,
+            document.getElementById("password").value,
+            document.getElementById("password_confirmation").value,
+          ];
+        },
+      });
+
+    if (formLogin) {
+      console.log(formLogin[0] + '-' + formLogin[1])
+      if (formLogin[0] !== "" && formLogin[1] !== "" && formLogin[2] !== "" && formLogin[3] !== "") {
+        if (!existLogin(formLogin[2])) {
+          if (formLogin[3] === formLogin[4]) {
+            /* aqui função apend */
+            registerUsers.push({
+              'firstName': formLogin[0],
+              'lastNAme': formLogin[1],
+              'email': formLogin[2],
+              'password': formLogin[3],
+              'type': 'user'
+            })
+            console.log(registerUsers)
+            Swal.fire({
+              icon: "success",
+              title: "Registo efectuado com sucesso!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "As passwords têm de ser iguais!",
+              showConfirmButton: true,
+            })
+          }
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Utilizador já existente!",
+            showConfirmButton: true,
+          })
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Todos os campos são obrigatórios!",
+          showConfirmButton: true,
+        })
+      }
+    }
+  })()
+}
+
+/*  Desenha a model Login  */
+function loginForm() {
+  (async () => {
+    const { value: formLogin } = await Swal.fire({
+      title: "Entrar",
       showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Registar",
+      confirmButtonText: "Entrar",
       cancelButtonText: "Cancelar",
-      closeOnConfirm: true,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: true,
+      allowEnterKey: true,
       html:
-        '<form id="regForm">' +
+        ' <form id="loginForm">' +
         '<span class="navbar-brand" href="#">' +
         '<img src="./images/logo.png" width="30" height="30" alt="logo" />' +
         "Filmes BD" +
         "</span><br><br>" +
         '<div class="form-group">' +
-        '<input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="Primeiro Nome">' +
+        '<input type="email" name="email" id="email" class="required form-control input-sm" placeholder="Correio Eletrónico">' +
         "</div>" +
         '<div class="form-group"> ' +
-        ' <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Ultimo Nome">' +
-        "</div>" +
-        '<div class="form-group">' +
-        '<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Correio Eletrónico">' +
-        "</div>" +
-        '<div class="form-group"> ' +
-        '<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Senha"> ' +
-        "</div>" +
-        '<div class="form-group">' +
-        '<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirme a Senha">' +
-        "</div>" +
-        "</form>",
-    },
-    function (isConfirm) {
-      // do whatever you want with the form data
-      console.log(this.swalForm); // { name: 'user name', nickname: 'what the user sends' }
-    }
-  );
-}
+        '<input type="password" name="password" id="password" class="required form-control input-sm" placeholder="Senha"> ' +
+        "</div></form>",
+      footer: '<p>Faça Login ou <a href="javascript:regForm()" >Crie um novo utilizador</a>',
+      preConfirm: () => {
+        return [
+          document.getElementById("email").value,
+          document.getElementById("password").value,
+        ];
+      },
+    });
 
-/*  Desenha a model Login  */
-function loginForm() {
-  swal({
-    title: "Entrar",
-
-    showCancelButton: true,
-    confirmButtonColor: "#218838",
-    confirmButtonText: "Entrar",
-    cancelButtonText: "Cancelar",
-    closeOnConfirm: true,
-    html:
-      ' <form id="loginForm">' +
-      '<span class="navbar-brand" href="#">' +
-      '<img src="./images/logo.png" width="30" height="30" alt="logo" />' +
-      "Filmes BD" +
-      "</span><br><br>" +
-      '<div class="form-group">' +
-      '<input type="email" name="email" id="email" class="required form-control input-sm" placeholder="Correio Eletrónico">' +
-      "</div>" +
-      '<div class="form-group"> ' +
-      '<input type="password" name="password" id="password" class="required form-control input-sm" placeholder="Senha"> ' +
-      "</div></form>",
-    preConfirm: () => {
-      let username = Swal.getPopup().querySelector("#email").value;
-      let password = Swal.getPopup().querySelector("#password").value;
-      if (username === "" || password === "") {
-        Swal.showValidationMessage('Username/Password empty');
+    if (formLogin) {
+      console.log(formLogin[0] + '-' + formLogin[1])
+      if (hasLogin(formLogin[0], formLogin[1])) {
+        showLoginElement('none', 'block');
+        Swal.fire({
+          icon: "success",
+          title: "Login efectuado!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        if (isAdmin(formLogin[0])) {
+          window.location.replace("./backOffice.html");
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Utilizador ou senha inválida!",
+          showConfirmButton: true,
+        })
       }
-      return { username: username, password: password };
-    },
-  });
+    }
+
+  })()
 }
 
 /* Filtra o tipo de filmes */
@@ -294,13 +400,13 @@ function buildTableCast(data, cast_type) {
 /*  Modal Detalhes Filmes  */
 
 function movieModal(vMovie) {
-  swal({
+  Swal.fire({
     title: vMovie.titulo,
 
     showCancelButton: true,
     confirmButtonColor: "#218838",
     confirmButtonText: "Entrar",
-    showConfirmButton:false,
+    showConfirmButton: false,
     cancelButtonText: "fechar",
     closeOnConfirm: true,
     html:
@@ -330,24 +436,24 @@ function movieModal(vMovie) {
 /*  Modal Detalhes Cast  */
 
 function castModal(vCast) {
-  swal({
+  Swal.fire({
     title: vCast.nome,
 
     showCancelButton: true,
     confirmButtonColor: "#218838",
     confirmButtonText: "Entrar",
-    showConfirmButton:false,
+    showConfirmButton: false,
     cancelButtonText: "fechar",
     closeOnConfirm: true,
     html:
       '<div class="card shadow border-0">' +
-      '<div>'+
+      '<div>' +
       '<img src="./images/Staff/' +
       vCast.image +
       '"  class="img-thumbnail" alt="' +
       vCast.image +
       '" />' +
-      '</div>'+
+      '</div>' +
       '<div class="card-body">' +
       '<h5 class="card-title">' +
       vCast.type +
@@ -359,9 +465,98 @@ function castModal(vCast) {
   });
 }
 
+
+/*  Desenha a modal Editar Utilizadores  */
+
+function userEdit(v_id) {
+  vUser = registerUsers[v_id];
+  (async () => {
+    const { value: formLogin } = await Swal.fire({
+      title: "Editar Utilizador",
+
+      showCancelButton: true,
+      confirmButtonColor: "#218838",
+      confirmButtonText: "Gravar",
+      cancelButtonText: "Cancelar",
+      closeOnConfirm: true,
+      html:
+        ' <form id="movieForm">' +
+        '<span class="navbar-brand" href="#">' +
+        '<img src="./images/logo.png" width="30" height="30" alt="logo" />' +
+        "Filmes BD" +
+        "</span><br><br>" +
+        '<div class="form-group">' +
+        '<img src="./images/user/userPhoto.jpg"  class="img-thumbnail" alt="Foto Utilizador" />' +
+        "</div>" +
+        '<div class="form-group">' +
+        '<div class="input-group">' +
+        '<div class="input-group-prepend">' +
+        '<span class="input-group-text" id="btnInserir">Inserir</span>' +
+        "</div>" +
+        '<div class="custom-file">' +
+        '<input type="file" class="custom-file-input" id="imageMovie"  aria-describedby="btnInserir">' +
+        '<label class="custom-file-label" for="imageMovie">Escolha uma imagem</label>' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        '<div class="form-group">' +
+        '<input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="Primeiro Nome" value="' +
+        vUser.firstName +
+        '">' +
+        "</div>" +
+        '<div class="form-group"> ' +
+        ' <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Ultimo Nome" value="' +
+        vUser.lastNAme +
+        '">' +
+        "</div>" +
+        '<div class="form-group">' +
+        '<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Correio Eletrónico" value="' +
+        vUser.email +
+        '">' +
+        "</div>" +
+        '<div class="form-group"> ' +
+        '<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Senha"> ' +
+        "</div>" +
+        '<div class="form-group">' +
+        '<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirme a Senha">' +
+        "</div>" +
+        "</form>",
+      preConfirm: () => {
+        return [
+          document.getElementById("first_name").value,
+          document.getElementById("last_name").value,
+          document.getElementById("email").value,
+        ];
+      },
+    });
+
+    if (formLogin) {
+      console.log(formLogin[0] + '-' + formLogin[1])
+      vUser.firstName = formLogin[0];
+      vUser.lastNAme = formLogin[1];
+      vUser.email = formLogin[2];
+
+      showLoginElement('none', 'block');
+      Swal.fire({
+        icon: "success",
+        title: "Dados alterados com sucesso!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+    }
+
+  })()
+}
+
+
+
 // muda os favoritos
 
 function isFavorite(star) {
   if (star.className === "fa fa-star-o") star.className = "fa fa-star checked";
   else star.className = "fa fa-star-o";
 }
+
+
+

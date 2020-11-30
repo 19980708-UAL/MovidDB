@@ -72,19 +72,6 @@ function movieForm(vMovie) {
         '<input type="text" name="elenco" id="elenco" class="form-control input-sm" placeholder="Elenco"> Tenho de por div e ser preenchida pelo javascript' +
         "</div>" +
         "</form>",
-      preConfirm: () => {
-        /*           const email = document.getElementById('email').value
-          const password = document.getElementById('password').value
-          let aut = 0;
-          for (let i = 0; i < registerUsers.length; i++) {
-            if (registerUsers[i].email === email) {
-              aut = aut + 1;
-            }
-          }
-          if (aut === 0){
-            alert('User ou password incorrectos!');
-          } */
-      },
     },
     function (isConfirm) {
       // do whatever you want with the form data
@@ -184,19 +171,6 @@ function userEdit(vUser) {
         '<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirme a Senha">' +
         "</div>" +
         "</form>",
-      preConfirm: () => {
-        /*           const email = document.getElementById('email').value
-          const password = document.getElementById('password').value
-          let aut = 0;
-          for (let i = 0; i < registerUsers.length; i++) {
-            if (registerUsers[i].email === email) {
-              aut = aut + 1;
-            }
-          }
-          if (aut === 0){
-            alert('User ou password incorrectos!');
-          } */
-      },
     },
     function (isConfirm) {
       // do whatever you want with the form data
@@ -381,19 +355,6 @@ function castEdit(vCast) {
         '">' +
         "</div>" +
         "</form>",
-      preConfirm: () => {
-        /*           const email = document.getElementById('email').value
-            const password = document.getElementById('password').value
-            let aut = 0;
-            for (let i = 0; i < registerUsers.length; i++) {
-              if (registerUsers[i].email === email) {
-                aut = aut + 1;
-              }
-            }
-            if (aut === 0){
-              alert('User ou password incorrectos!');
-            } */
-      },
     },
     function (isConfirm) {
       // do whatever you want with the form data
