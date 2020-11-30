@@ -1,0 +1,98 @@
+.bg-custom-1 {
+  background-color: #85144b;
+}
+
+.bg-custom-2 {
+background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+.carousel-item {
+    height: 350px;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    text-shadow: 3px 3px #242424;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: bold;
+  }
+
+  .navbar {
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(68, 67, 67));
+    background-repeat: no-repeat;
+  }
+
+/* MODAL */
+.modal-header
+ {
+     padding:9px 15px;
+     border-bottom:1px solid #eee;
+     background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(68, 67, 67));
+     
+ }
+
+/*  Manter cartaz com tamanho igual  */
+.row .card-img-top{
+  height: 300px;
+}
+
+/*  form nav menu  */
+
+#formPesq div{
+  white-space: nowrap;
+}
+
+.checked {
+  color: orange;
+}
+
+footer {
+  padding: 25px 0;
+  text-align: center;
+}
+
+footer span.copyright{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 90%;
+  line-height: 40px;
+}
+
+ul.social-buttons{
+  margin-bottom: 0;
+}
+
+ul.social-buttons li a {
+  font-size: 20px;
+  line-height: 40px;
+  display: block;
+  width: 40px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  color: white;
+  border-radius: 100%;
+  outline: none;
+  background-color: #212529;
+}
+
+ul.social-buttons li a:active, ul.social.buttons li a:focus, ul.social-buttons li a:hover{
+  background-color: #3677b1;
+}
+
+/* Style da classe activa, e butões on mouse-over do menu da nav-bar*/
+nav .active,nav .btn:hover {
+  background-color: rgba(102, 102, 102, 0.541);
+  border-radius: 15px;
+  color: white;
+}
+
+.img-thumbnail{
+  max-height: 200px;
+}
+
+#fotoUser{
+  margin-top: 20px;
+  margin-left: 35%;
+}
