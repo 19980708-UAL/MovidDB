@@ -1,4 +1,5 @@
 
+/*  Objecto filmes  */
 let myMoviesAction = [
   {
     'image': "007Spectre.jpg",

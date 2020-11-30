@@ -364,7 +364,7 @@ function buildTableCast(data, cast_type) {
             "</div>" +
             '<i class="fa fa-star' +
             data[i].favorite +
-            '" aria-hidden="true" onclick="isFavorite(this);">></i>' +
+            '" aria-hidden="true" onclick="isFavorite(this);"></i>' +
             "</div>" +
             "</div>" +
             "</div>";
@@ -386,7 +386,7 @@ function buildTableCast(data, cast_type) {
             "</div>" +
             '<i class="fa fa-star' +
             data[i].favorite +
-            '" aria-hidden="true" onclick="isFavorite(this);">></i>' +
+            '" aria-hidden="true" onclick="isFavorite(this);"></i>' +
             "</div>" +
             "</div>" +
             "</div>";
